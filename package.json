@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "serve": "concurrently \"ng serve \" \"node serverSide/app.js\"",
-    "postinstall": "ng build --output-path dist",
+    "postinstall": "ng build --configuration=production --output-path dist",
     "heroku-postbuild": "ng build --prod"
   },
   "engines": {
