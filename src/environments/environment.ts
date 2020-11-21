@@ -3,7 +3,7 @@ export const environment = {
   production: false,
 
   heroesApi: {
-    base: 'http://localhost:4201'
+    base: 'http://localhost:8080'
   }
 
 };

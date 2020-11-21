@@ -1,5 +1,4 @@
 //PACKAGES
-var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -47,11 +46,6 @@ app.use('/', indexRouter);
 app.use('/heroes', heroRouter);
 
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -68,7 +62,7 @@ const db = mongooseImport.connection;
 db.on('error',(error)=> console.log(error));
 db.once('open', ()=> console.log('Database running'));
 
-const server = app.listen( process.env.PORT || 4201, function(){
+const server = app.listen( process.env.PORT || 8080, function(){
   console.log(`server running on port: ${server.address().port}`);
 })
 
