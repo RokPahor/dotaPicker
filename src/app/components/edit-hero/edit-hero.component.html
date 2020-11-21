@@ -1,0 +1,19 @@
+
+  <div class="d-flex justify-content-center w-100 text-dark">
+    <div> <h1> Settings </h1>  </div>
+  </div>
+  <hr/>
+  <div class="d-flex justify-content-between m-2 mb-3">
+    <div>
+      <button class="btn btn-outline-dark" (click)="setDatabaseToDefault()" > Set database to default</button>
+    </div>
+    <div>
+      <input type="text" class="form-control" placeholder="Password" [(ngModel)]="password"/>
+      <span class="text-danger " *ngIf="error">    Napačno geslo! </span>
+    </div>
+  </div>
+  <hr/>
+  <div class="d-flex m-2  justify-content-end" >
+    <button class="btn btn-outline-dark" (click)="activeModal.close()"> Cancel</button>
+  </div>
+  <div [hidden]="loaded" class="spinner-border text-danger loader"></div>

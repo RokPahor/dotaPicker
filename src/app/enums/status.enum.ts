@@ -1,0 +1,5 @@
+export enum Status {
+    PICKING = 'PICKING', //PICK PHASE
+    EDIT_PICK = 'EDIT_PICK', // SELECTING A HERO TO EDIT
+    EDIT = 'EDIT' // EDITING HERO
+}
