@@ -3,5 +3,8 @@ export const environment = {
 
   heroesApi: {
     base: ''
+  },
+  helperApi: {
+    base: ''
   }
 };

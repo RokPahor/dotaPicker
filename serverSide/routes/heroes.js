@@ -1,8 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const Hero = require('../models/hero');
+var jwt = require('jsonwebtoken')
 
-//-----------------------------------------------------GET calls
+//-------------------------------------------------------------------------------------------------------TOKEN VERIFICATION
+function ensureToken(req,res,next){
+  const bearerHeader = req.headers["authorization"];
+  if(typeof bearerHeader !== "undefined"){
+    const bearer = bearerHeader.split(" ");
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
+    next();
+  }
+  else{
+    res.sendStatus(403);
+  }
+}
+//------------------------------------------------------------------------------------------------------------GET calls
 router.get('/', async (req,res)=> { 
   //GetAllHeroes
     try {
@@ -36,23 +50,30 @@ router.get('/:id', async (req,res)=> {
     }
 
 })
-//----------------------------------------------------PUT calls
-router.patch('/:id', async (req,res)=> {
-  try {
-  //find hero
-  const hero = await Hero.updateOne({heroId: req.params.id}, {
-    $set: {
-      goodWith: req.body.goodWith,
-      badAgainst: req.body.badAgainst
+//---------------------------------------------------------------------------------------------------------PUT calls
+router.patch('/:id', ensureToken, async (req,res)=> {
+  jwt.verify(req.token, process.env.SECRET, async function(err,data){
+    if(err){
+      res.sendStatus(403)
     }
-  });
-  res.json(hero);
+    else{
+      try {
+        const hero = await Hero.updateOne({heroId: req.params.id}, {
+          $set: {
+            goodWith: req.body.goodWith,
+            badAgainst: req.body.badAgainst
+          }
+        });
+        res.json(hero);
+      }
+      catch(err){
+        res.status(500);
+      }
+    }
   }
-  catch(err){
-    res.status(500);
-  }
-})
-//----------------------------------------------------POST calls
+  )})
+
+//--------------------------------------------------------------------------------------------------------POST calls
 router.post('/init', async (req,res) => {
     try {
       await heroes.forEach(heroData => {
@@ -71,7 +92,7 @@ catch(err){
 }
 })
 
-
+//------------------------------------------------------------------------------------------------------DATA for DATABASE INIT
 let heroes = 
 [
   

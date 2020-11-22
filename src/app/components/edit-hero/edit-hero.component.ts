@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { tap } from 'rxjs/operators';
-import { HeroService } from 'src/app/services/hero.service';
+import { HelperService } from 'src/app/services/helper.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: "app-edit-hero",
@@ -9,20 +9,21 @@ import { HeroService } from 'src/app/services/hero.service';
   styleUrls: ["./edit-hero.component.sass"],
 })
 export class EditHeroComponent implements OnInit {
-  constructor(public activeModal: NgbActiveModal, private heroService: HeroService) {}
+  constructor(public activeModal: NgbActiveModal, private helperService: HelperService, private storage: StorageService) {}
   public password = '';
-  public loaded: boolean = true;
+  public username = '';
   public error: boolean = false;
 
   ngOnInit() {}
 
-  public setDatabaseToDefault(){
-    if(this.password != 'lalal'){
-      this.error = true;
-    }
-    else{
-      this.error = false;
+public login(){
+  this.helperService.login({userName: this.username, password: this.password}).subscribe(res=> {
+    this.error = false;
+    this.storage.setToken(res.token);
+    this.activeModal.close();
+  }, ()=> {
+  this.error = true;
+  })
+}
 
-    }
-  }
 }

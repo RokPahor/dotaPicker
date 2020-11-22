@@ -5,14 +5,14 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HeroCompComponent } from "./components/hero-comp/hero-comp.component";
 import { HeroGridComponent } from "./components/hero-grid/hero-grid.component";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { EditHeroComponent } from "./components/edit-hero/edit-hero.component";
 import { ToastrModule } from "ngx-toastr";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AtributPipe } from "./pipes/atribut-pipe.model";
 import { ServiceWorkerModule } from "@angular/service-worker";
-import { environment } from "../environments/environment";
 import { FormsModule } from '@angular/forms';
+import { TokenInterceptor } from './interceptors/token-interceptor';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,9 @@ import { FormsModule } from '@angular/forms';
     ServiceWorkerModule.register("ngsw-worker.js"),
     FormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
   entryComponents: [EditHeroComponent],
 })

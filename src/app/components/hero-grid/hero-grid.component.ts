@@ -7,9 +7,10 @@ import {
 import { EditHeroComponent } from "../edit-hero/edit-hero.component";
 import { Settings } from "src/app/models/settings.model";
 import { Status } from "src/app/enums/status.enum";
-import { forkJoin, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import * as _ from "lodash";
-import { map, startWith, take, takeUntil, tap } from "rxjs/operators";
+import { map } from "rxjs/operators";
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: "app-hero-grid",
@@ -20,6 +21,7 @@ export class HeroGridComponent implements OnInit {
   constructor(
     private heroService: HeroService,
     private modalService: NgbModal,
+    public storage: StorageService
   ) {}
   private subscriptions: Subscription = new Subscription();
   public loadedHeroes: number = 0;

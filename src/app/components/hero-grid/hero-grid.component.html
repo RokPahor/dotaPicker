@@ -1,11 +1,10 @@
 <div [class.visible]="loaded">
   <div class="container-fluid">
     <!--  login button on the right  -->
-    <div class="row mt-4">
-     <!--    <div style="width: 100px;" class="ml-auto mt-3">
-        <button class="btn btn-outline-info" (click)="editHero()"> Settings</button>
-      </div>
-      -->
+    <div class="row" [ngClass]="{'mt-4': storage.getToken() }">
+      <div class="ml-auto mt-3 mr-2" *ngIf="!storage.getToken()">
+        <button class="btn btn-outline-info" (click)="editHero()"> Authenticate</button>
+      </div>   
     </div>
     <!--  GRID OF HEROES for selecting-  -->
     <div class="row mb-2 mt-2" *ngIf="allHeroesData.length > 0">
@@ -45,7 +44,7 @@
     </div>
     <div class="row mt-3" [class.visible]="loaded">
       <!-- RADIANT selected heroes-->
-      <div class="col-12 col-lg-4">
+      <div class="col-12 col-lg-4 mb-2">
         <span *ngIf="radiantHeroes.length > 0"><b> RADIANT HEROES </b> </span>
         <div
           class="d-flex mt-2"
@@ -61,7 +60,7 @@
         </div>
       </div>
       <!-- buttons for selecting teams-->
-      <div class="col-12 col-lg-4 mt-2">
+      <div class="col-12 col-lg-4 my-3">
         <!-- SELECTED HERO TO EDIT -->
         <div
           class="d-flex justify-content-center mb-3"
@@ -177,7 +176,7 @@
               Reset picking
             </button>
           </div>
-          <div class="ml-auto mr-auto">
+          <div class="ml-auto mr-auto" *ngIf="storage.getToken()">
             <button class="btn btn-dark" (click)="enterEditMode()">
               Edit Hero
             </button>
@@ -185,7 +184,7 @@
         </div>
       </div>
       <!-- DIRE selected heroes-->
-      <div class="col-12 col-lg-4">
+      <div class="col-12 col-lg-4 mb-4">
         <span *ngIf="direHeroes.length > 0"> <b> DIRE HEROES </b></span>
         <div
           class="d-flex"

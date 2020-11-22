@@ -6,11 +6,10 @@ import { HelperService } from './helper.service';
 @Injectable({
   providedIn: 'root'
 })
+//Service for API calls (Hero Data)
 
 export class HeroService {              
   
- 
-
   constructor(private http: HttpClient, private helperApi: HelperService) { }            
   //-------------------------------------------------------------------------------------------------------------------------         
   //FLASK CALLS

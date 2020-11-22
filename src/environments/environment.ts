@@ -4,7 +4,9 @@ export const environment = {
 
   heroesApi: {
     base: 'http://localhost:8080'
+  },
+  helperApi: {
+    base: 'http://localhost:8080'
   }
-
 };
 
