@@ -3,41 +3,26 @@
     <!--  login button on the right  -->
     <div class="row" [ngClass]="{'mt-4': storage.getToken() }">
       <div class="ml-auto mt-3 mr-2" *ngIf="!storage.getToken()">
-        <button class="btn btn-outline-info" (click)="editHero()"> Authenticate</button>
-      </div>   
+        <button class="btn btn-outline-info" (click)="editHero()"> Login</button>
+      </div>
     </div>
     <!--  GRID OF HEROES for selecting-  -->
     <div class="row mb-2 mt-2" *ngIf="allHeroesData.length > 0">
       <div class="col-12 col-xl-4">
         <span *ngFor="let hero of allHeroesData | filter: 'agi'">
-          <app-hero-comp
-            [hero]="hero"
-            [settings]="settings"
-            (onSelect)="onSelectHero($event)"
-            (loaded)="imgLoaded()"
-          >
+          <app-hero-comp [hero]="hero" [settings]="settings" (onSelect)="onSelectHero($event)" (loaded)="imgLoaded()">
           </app-hero-comp>
         </span>
       </div>
       <div class="col-12 col-xl-4">
         <span *ngFor="let hero of allHeroesData | filter: 'str'">
-          <app-hero-comp
-            [hero]="hero"
-            [settings]="settings"
-            (onSelect)="onSelectHero($event)"
-            (loaded)="imgLoaded()"
-          >
+          <app-hero-comp [hero]="hero" [settings]="settings" (onSelect)="onSelectHero($event)" (loaded)="imgLoaded()">
           </app-hero-comp>
         </span>
       </div>
       <div class="col-12 col-xl-4">
         <span *ngFor="let hero of allHeroesData | filter: 'int'">
-          <app-hero-comp
-            [hero]="hero"
-            [settings]="settings"
-            (onSelect)="onSelectHero($event)"
-            (loaded)="imgLoaded()"
-          >
+          <app-hero-comp [hero]="hero" [settings]="settings" (onSelect)="onSelectHero($event)" (loaded)="imgLoaded()">
           </app-hero-comp>
         </span>
       </div>
@@ -45,87 +30,56 @@
     <div class="row mt-3" [class.visible]="loaded">
       <!-- RADIANT selected heroes-->
       <div class="col-12 col-lg-4 mb-2">
-        <span *ngIf="radiantHeroes.length > 0"><b> RADIANT HEROES </b> </span>
-        <div
-          class="d-flex mt-2"
-          [ngClass]="{ 'radiant-border': radiantHeroes.length > 0 }"
-        >
-          <div *ngFor="let hero of radiantHeroes" class="picked-hero">
-            <img
-              src="../../assets/heros/{{ hero.name }}.png"
-              style="border: 5px #28a745 solid;"
-              width="100%"
-            />
+        <div class="heroes-title" *ngIf="radiantHeroes.length > 0"><b> RADIANT HEROES </b> </div>
+        <div class="d-flex mt-2" [ngClass]="{ 'radiant-border': radiantHeroes.length > 0 }">
+          <div *ngFor="let hero of radiantHeroes" class="picked-hero" ngbTooltip="{{hero.name}}">
+            <img src="../../assets/heros/{{ hero.name }}.png" style="border: 5px #00454a solid;" width="100%" />
           </div>
         </div>
       </div>
       <!-- buttons for selecting teams-->
       <div class="col-12 col-lg-4 my-3">
         <!-- SELECTED HERO TO EDIT -->
-        <div
-          class="d-flex justify-content-center mb-3"
-          *ngIf="settings.status === Status.EDIT"
-        >
+        <div class="d-flex justify-content-center mb-3" *ngIf="settings.status === Status.EDIT">
           <div *ngFor="let hero of editedHero" class="edited-hero">
-            <img
-              src="../../assets/heros/{{ hero.name }}.png"
-              style="border: 5px silver solid;"
-              width="100%"
-              ngbTooltip="Editing hero: {{ hero.name }}"
-            />
+            <img src="../../assets/heros/{{ hero.name }}.png" style="border: 5px silver solid;" width="100%"
+              ngbTooltip="Editing hero: {{ hero.name }}" />
           </div>
         </div>
         <div class="d-flex justify-content-center mt-2">
           <!--  RADIANT TEAM BUTOTN-->
-          <div
-            class="mr-2"
-            style="position: relative;"
-            *ngIf="settings.status === Status.PICKING"
-          >
-            <div
-              class="spinner-grow text-success top-left"
-              role="status"
-              [hidden]="
+          <div class="mr-2" style="position: relative;" *ngIf="settings.status === Status.PICKING">
+            <div class="spinner-grow text-success top-left" role="status" [hidden]="
                 settings.selectedTeam !== 'RADIANT' ||
                 radiantHeroes.length + direHeroes.length == 10
-              "
-            >
+              ">
               <span class="sr-only"></span>
             </div>
-            <img
-              class="team-button"
-              src="../../assets/heros/radiant.png"
-              (click)="changePickerTeam('RADIANT')"
-            />
+            <img class="team-button" src="../../assets/heros/radiant.png" (click)="changePickerTeam('RADIANT')"
+              alt="Radiant" />
           </div>
           <!--  DIRE TEAM BUTOTN-->
-          <div
-            class="ml-2"
-            style="position: relative;"
-            *ngIf="settings.status === Status.PICKING"
-          >
-            <img
-              class="team-button"
-              src="../../assets/heros/dire.png"
-              (click)="changePickerTeam('DIRE')"
-            />
-            <div
-              class="spinner-grow text-danger top-left"
-              role="status"
-              [hidden]="
+          <div class="ml-2" style="position: relative;" *ngIf="settings.status === Status.PICKING">
+            <img class="team-button" src="../../assets/heros/dire.png" (click)="changePickerTeam('DIRE')" alt="Dire" />
+            <div class="spinner-grow text-danger top-left" role="status" [hidden]="
                 settings.selectedTeam !== 'DIRE' ||
                 radiantHeroes.length + direHeroes.length == 10
-              "
-            >
+              ">
               <span class="sr-only"></span>
             </div>
           </div>
           <!-- GOOD WITH/AGAINST IN EDIT MODE BUTTON -->
-          <div
-            class="ml-2"
-            style="position: relative;"
-            *ngIf="settings.status === Status.EDIT"
-          >
+          <div class="d-flex justify-content-center w-100 mt-3" *ngIf="settings.status === Status.EDIT">
+            <div class="w-100" style="position: relative;">
+              <ul>
+                <li [ngClass]="{ 'active-button' : settings.showSelected === 'GOOD' }"> <a (click)="editShowGood()">
+                    Good with </a> </li>
+                <li > <a (click)="submitEditHeroes()"> Save
+                  changes </a> </li>
+                <li [ngClass]="{ 'active-button' : settings.showSelected === 'BAD' }"> <a (click)="editShowBad()"> Bad
+                    against </a> </li>
+              </ul>
+              <!-- 
             <button
               class="btn btn-outline-warning"
               (click)="editShowGood()"
@@ -150,7 +104,7 @@
             class="ml-2"
             style="position: relative;"
             *ngIf="settings.status === Status.EDIT"
-          >
+          >          
             <button
               class="btn btn-outline-danger"
               [ngClass]="{ active: settings.showSelected === 'BAD' }"
@@ -158,24 +112,41 @@
             >
               Bad against
             </button>
+          -->
+            </div>
+
           </div>
         </div>
         <!-- SELECT HERO TEXT IN EDIT_PICK MODE-->
-        <div
-          class="d-flex justify-content-center"
-          *ngIf="settings.status === Status.EDIT_PICK"
-        >
-          <div style="font-size: 180%;">
+        <div class="d-flex justify-content-center" *ngIf="settings.status === Status.EDIT_PICK">
+          <div style="font-size: 2.5em;">
             Select a hero to edit
           </div>
         </div>
         <!--EDIT HERO BUTTON-->
-        <div class="d-flex justify-content-center mt-3 p-3" style="border: solid 1px silver; border-radius: 10px;" *ngIf="settings.status === Status.PICKING">
+        <div class="d-flex justify-content-center mt-3 p-3" style="border: solid 1px silver; border-radius: 10px;"
+          *ngIf="settings.status === Status.PICKING">
           <div class=" ml-auto mr-auto">
             <button class="btn btn-dark" (click)="resetGrid()">
               Reset picking
             </button>
           </div>
+          <div class="d-flex justify-content-center" style="font-size:x-large; align-self: flex-end;cursor:pointer; width:40px;height:40px; border-radius:25px;border: 1px solid white" *ngIf="settings.status === Status.PICKING" [ngbTooltip]="popTitle">
+            ?
+          </div>
+          <!-- HELPER POPOVER-->
+          <ng-template #popTitle>  
+          <div>
+            <div>
+              Border color meaning:
+            </div>
+            <hr style="background-color: whitesmoke" />
+            <div class="d-flex justify-content-between my-2" *ngFor="let color of [{'color': '#3A1C71', text: 'Good pick'},{'color': '#D76D77', text: 'Very good pick'},{'color': '#FFAF7B', text: 'Excellent pick'}]">
+              <div [style.background-color]="color?.color" style="width:25px;height:25px"></div> {{ color?.text}}
+            </div>
+            <hr style="background-color: whitesmoke" />
+          </div>        
+          </ng-template>
           <div class="ml-auto mr-auto" *ngIf="storage.getToken()">
             <button class="btn btn-dark" (click)="enterEditMode()">
               Edit Hero
@@ -185,17 +156,10 @@
       </div>
       <!-- DIRE selected heroes-->
       <div class="col-12 col-lg-4 mb-4">
-        <span *ngIf="direHeroes.length > 0"> <b> DIRE HEROES </b></span>
-        <div
-          class="d-flex"
-          [ngClass]="{ 'dire-border': direHeroes.length > 0 }"
-        >
-          <div *ngFor="let hero of direHeroes" class="picked-hero">
-            <img
-              src="../../assets/heros/{{ hero.name }}.png"
-              style="border: 5px #dc3545 solid;"
-              width="100%"
-            />
+        <div class="heroes-title" *ngIf="direHeroes.length > 0"> <b> DIRE HEROES </b></div>
+        <div class="d-flex mt-2" [ngClass]="{ 'dire-border': direHeroes.length > 0 }">
+          <div *ngFor="let hero of direHeroes" class="picked-hero" ngbTooltip="{{hero.name}}">
+            <img src="../../assets/heros/{{ hero.name }}.png" style="border: 5px #ed6363 solid;" width="100%" />
           </div>
         </div>
       </div>

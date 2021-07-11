@@ -9,7 +9,7 @@ constructor(private storage: StorageService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const modifiedReq = req.clone({ 
-      headers: req.headers.set('Authorization', `Bearer ${this.storage.getToken()}`),
+      headers: req.headers.set('Authorization', `Bearer ${this.storage.getToken() || ''}`),
     });
     return next.handle(modifiedReq);
   }

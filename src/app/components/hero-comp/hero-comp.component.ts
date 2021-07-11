@@ -15,6 +15,7 @@ export class HeroCompComponent implements OnInit {
   public hero: Hero;
   @Input()
   public settings: Settings;
+  public imageFullyLoaded: boolean = false;
 
   @Output() onSelect = new EventEmitter();
   @Output() loaded = new EventEmitter();
@@ -27,6 +28,7 @@ export class HeroCompComponent implements OnInit {
     //img loaded into DOM
     let that = this;
     this.image.nativeElement.onload = function(){
+      that.imageFullyLoaded = true;
       that.loaded.emit();
     }
   }

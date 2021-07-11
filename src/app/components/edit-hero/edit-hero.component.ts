@@ -17,13 +17,15 @@ export class EditHeroComponent implements OnInit {
   ngOnInit() {}
 
 public login(){
-  this.helperService.login({userName: this.username, password: this.password}).subscribe(res=> {
-    this.error = false;
-    this.storage.setToken(res.token);
-    this.activeModal.close();
-  }, ()=> {
-  this.error = true;
-  })
+  if(this.username && this.password){
+    this.helperService.login({userName: this.username, password: this.password}).subscribe(res=> {
+      this.error = false;
+      this.storage.setToken(res.token);
+      this.activeModal.close();
+    }, ()=> {
+      this.error = true;
+    })
+  }
 }
 
 }

@@ -1,16 +1,19 @@
 <img
 #image
   src="../../assets/heros/{{ hero.name }}.png"
-  style="width:85px;cursor:pointer"
+  style="width:85px;cursor:pointer;height:55px"
   class="hero m-1 p-1 disabled"
   [ngClass]="{
-    'red-color': hero.selectedCounter == 3,
-    'blue-color': hero.selectedCounter == 1,
-    'yellow-color': hero.selectedCounter == 2,
+    'excellent-color': hero.selectedCounter == 3,
+    'good-color': hero.selectedCounter == 1,
+    'verygood-color': hero.selectedCounter == 2,
     'black-color ': !hero.selectedCounter,
     disabled: hero.disabled === true,
     active: !hero.disabled,
     blur: !hero.searchResult
   }"
   (click)="selectHero($event)"
+  [hidden]="!imageFullyLoaded"
+  alt="{{ hero.name }}"
 />
+<div [hidden]="imageFullyLoaded" class="spinner-border text-danger loader"></div>

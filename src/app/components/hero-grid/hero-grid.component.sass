@@ -37,12 +37,15 @@
   width: 100px;
   cursor: pointer;
 
+.team-button:hover
+  opacity: 0.8;
+
 .radiant-border
-  border: 4px #28a745 solid;
+  border: 4px #00454a solid;
   border-radius: 10px;
 
 .dire-border
-  border: 4px #dc3545 solid;
+  border: 4px #ed6363 solid;
   border-radius: 10px;
 
 .dark-background
@@ -58,3 +61,25 @@
   text-align: center
   oveflow-x: hidden;
   text-transform: uppercase;
+  pointer-events: none;
+
+ul
+   list-style-type: none;
+   display: flex;
+   justify-content: space-between;
+   font-size: 1.4em;
+   padding: 0px;
+   align-items: baseline;
+
+li
+  cursor: pointer;
+  padding-bottom: 5px;
+
+li:hover
+  border-bottom: 6px solid #3500d3;
+.active-button
+  border-bottom: 6px solid #3500d3;
+
+.heroes-title
+  font-size: 1.4em;
+  text-align: center
